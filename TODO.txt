@@ -1,0 +1,3 @@
+model spread velocity
+	random for each cell
+	possibly use a probability of spreading?
