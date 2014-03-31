@@ -32,7 +32,7 @@ GL_ROOT    =/usr
 LIBS = -lglut -lGLU -lGL
 
 # Compiler and Linker flags
-CPPFLAGS = -g -Wall -std=c++11
+CPPFLAGS = -g -Wall -std=c++11 -O3
 LDFLAGS  = -L$(GL_ROOT)/lib
 
 # Colors

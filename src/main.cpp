@@ -15,16 +15,22 @@ int windowId;
 int window_height = 400;
 int window_width = 400;
 bool burning = false;
-paper p(50,50,300);
-vector<pair<int,int> > burn_start;
+paper p(50,50,1,300);
+vector<pair<int,int> > burn_points;
 
 /* Callbacks */
+void display();
+void reshape(int w, int h);
+void keyboard(unsigned char key, int x, int y);
+void special(int key, int x, int y);
+void mouse(int button, int state, int x, int y);
+void timer(int value);
+
+/* Callback definitions */
 void display()
 {
 	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	p.update(burning);
 	p.draw();
 
 	glutSwapBuffers();
@@ -52,16 +58,27 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 
 		case ' ':
-			cout << "Caught spacebar key" << endl;
-			if (burn_start.empty())
-				cout << "No points to burn!" << endl;
-			else {
-				cout << "Toggling burning: now ";
-				burning = not burning;
-				cout << (burning ? "ON" : "OFF") << endl;
+			if (not burning) {
+				cout << "Caught spacebar key" << endl;
+				if (burn_points.empty())
+					cout << "No points to burn!" << endl;
+				else {
+					burning = true;
+					p.start_burning(burn_points);
+					// cout << "here" << endl;
+					p.print_burning();
+					// cout << "here2" << endl;
+					glutTimerFunc(0,timer,0);
+
+				}
+				glutPostRedisplay();
 			}
-			glutPostRedisplay();
 			break;
+
+		case 'f':
+			if (burning) {
+				p.print_burning();
+			}
 	}
 }
 
@@ -72,14 +89,25 @@ void mouse(int button, int state, int x, int y)
 	if (state == GLUT_DOWN and button == GLUT_DOWN)
 	{
 		if (not burning) {
-			cout << "Added: " << x << " " << window_width - y << " to burn start" << endl;
-			pair<int,int> temp(x, window_width - y);
-			burn_start.push_back(temp);
+			if (p.contains(x, window_width - y)) {
+				cout << "Added: " << x << " " << window_width - y << " to burn start" << endl;
+				pair<int,int> temp(x - p.get_x(), window_width - y - p.get_y());
+				burn_points.push_back(temp);
+			}
+			else {
+				cout << "Clicked outside paper" << endl;
+			}
 		}
 		else {
 			cout << "Cannot add point while burning is going on" << endl;
 		}
 	}
+}
+
+void timer(int value)
+{
+	p.update(value);
+	glutTimerFunc(1000/30.f, timer, value+1);
 }
 
 int main(int argc, char* argv[])
@@ -88,7 +116,7 @@ int main(int argc, char* argv[])
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(window_height, window_width);
-	glutInitWindowPosition(0, 0);
+	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-window_width)/2, (glutGet(GLUT_SCREEN_HEIGHT)-window_height)/2);
 
 	windowId = glutCreateWindow("Paper Burning");
 
