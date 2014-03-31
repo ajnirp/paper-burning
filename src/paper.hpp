@@ -25,6 +25,7 @@ public:
 	bool contains(int xx, int yy);
 	inline cell* cell_at(int i, int j) { return &cells[i][j]; }
 	void start_burning(vector<pair<int,int> > & burn_points);
+	void start_burning(pair<int,int> burn_point, int t);
 
 	void print_burning();
 };

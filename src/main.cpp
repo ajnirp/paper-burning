@@ -11,12 +11,13 @@
 using namespace std;
 
 /* Global variables */
-int windowId;
+int window_id;
 int window_height = 400;
 int window_width = 400;
 bool burning = false;
 paper p(50,50,1,300);
 vector<pair<int,int> > burn_points;
+int sim_time = 0;
 
 /* Callbacks */
 void display();
@@ -54,7 +55,7 @@ void keyboard(unsigned char key, int x, int y)
 	{
 		case 27:
 			cout << "Caught escape key" << endl;
-			glutDestroyWindow(windowId);
+			glutDestroyWindow(window_id);
 			break;
 
 		case ' ':
@@ -65,9 +66,6 @@ void keyboard(unsigned char key, int x, int y)
 				else {
 					burning = true;
 					p.start_burning(burn_points);
-					// cout << "here" << endl;
-					p.print_burning();
-					// cout << "here2" << endl;
 					glutTimerFunc(0,timer,0);
 
 				}
@@ -79,6 +77,7 @@ void keyboard(unsigned char key, int x, int y)
 			if (burning) {
 				p.print_burning();
 			}
+			break;
 	}
 }
 
@@ -99,13 +98,15 @@ void mouse(int button, int state, int x, int y)
 			}
 		}
 		else {
-			cout << "Cannot add point while burning is going on" << endl;
+			pair<int,int> temp(x - p.get_x(), window_width - y - p.get_y());
+			p.start_burning(temp, sim_time);
 		}
 	}
 }
 
 void timer(int value)
 {
+	sim_time = value;
 	p.update(value);
 	glutTimerFunc(1000/30.f, timer, value+1);
 }
@@ -118,7 +119,7 @@ int main(int argc, char* argv[])
 	glutInitWindowSize(window_height, window_width);
 	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-window_width)/2, (glutGet(GLUT_SCREEN_HEIGHT)-window_height)/2);
 
-	windowId = glutCreateWindow("Paper Burning");
+	window_id = glutCreateWindow("Paper Burning");
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

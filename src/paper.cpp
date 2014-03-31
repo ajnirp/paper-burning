@@ -85,8 +85,14 @@ void paper::start_burning(vector<pair<int,int> > & burn_points)
 		int i = itr->first;
 		int j = itr->second;
 		cells[i][j].set_burning(0);
-		cout << i << " " << j << endl;
 	}
+}
+
+void paper::start_burning(pair<int,int> burn_point, int t)
+{
+	int i = burn_point.first;
+	int j = burn_point.second;
+	cells[i][j].set_burning(t);
 }
 
 void paper::print_burning()
