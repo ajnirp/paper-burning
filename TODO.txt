@@ -1,3 +1,9 @@
-model spread velocity
+model spread velocity --DONE
 	random for each cell
-	possibly use a probability of spreading?
+	possibly use a probability of spreading? --DONE
+
+model temperature of a cell
+	temperature influences the color of a cell (red hot, white hot, etc.)
+	look at t - burn_start to determine temperature
+		how to model temperature falloff?
+
