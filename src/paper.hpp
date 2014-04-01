@@ -12,7 +12,7 @@ private:
 	int burn_speed;
 	cell** cells;
 
-	void unburnt_neighbours(int i, int j, vector<cell*> & accumulated);
+	void accumulate_unburnt(int i, int j, vector<cell*> & accumulated);
 
 public:
 	paper(int xx, int yy, int bspd, int ss=300);

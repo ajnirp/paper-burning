@@ -1,8 +1,10 @@
 #include "paper.hpp"
 #include "cell.hpp"
+#include "misc.hpp"
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <unistd.h>
 
 #include <GL/gl.h>
@@ -43,16 +45,25 @@ void paper::draw()
 	}
 }
 
-void paper::unburnt_neighbours(int i, int j, vector<cell*> & accumulated)
+void paper::accumulate_unburnt(int i, int j, vector<cell*> & accumulated)
 {
-	if ((i+1 < s) and (cells[i+1][j].state() == UNBURNT))
-		accumulated.push_back(&cells[i+1][j]);
-	if ((j+1 < s) and (cells[i][j+1].state() == UNBURNT))
-		accumulated.push_back(&cells[i][j+1]);
-	if ((i-1 >= 0) and (cells[i-1][j].state() == UNBURNT))
-		accumulated.push_back(&cells[i-1][j]);
-	if ((j-1 >= 0) and (cells[i][j-1].state() == UNBURNT))
-		accumulated.push_back(&cells[i][j-1]);
+	double threshold = 0.3; // 0.3 gives a nice simulation
+	if ((i+1 < s) and (cells[i+1][j].state() == UNBURNT)) {
+		if (random2() <= threshold)
+			accumulated.push_back(&cells[i+1][j]);
+	}
+	if ((j+1 < s) and (cells[i][j+1].state() == UNBURNT)) {
+		if (random2() <= threshold)
+			accumulated.push_back(&cells[i][j+1]);
+	}
+	if ((i-1 >= 0) and (cells[i-1][j].state() == UNBURNT)) {
+		if (random2() <= threshold)
+			accumulated.push_back(&cells[i-1][j]);
+	}
+	if ((j-1 >= 0) and (cells[i][j-1].state() == UNBURNT)) {
+		if (random2() <= threshold)
+			accumulated.push_back(&cells[i][j-1]);
+	}
 }
 
 void paper::update(int t)
@@ -62,15 +73,14 @@ void paper::update(int t)
 	for (int i = 0 ; i < s ; i++) {
 		for (int j = 0 ; j < s ; j++) {
 			if (cells[i][j].state() == BURNING) {
-				unburnt_neighbours(i,j,accumulated);
+				accumulate_unburnt(i,j,accumulated);
 				/* check if burning time is over and set to BURNT if need be */
 				cells[i][j].check_burnt(t);
 			}
 		}
 	}
 	/* set the cells in 'accumulated' to burning */
-	for (auto itr = accumulated.begin() ; itr != accumulated.end() ; itr++)
-		(*itr)->set_burning(t);
+	for (cell* c : accumulated) c->set_burning(t);
 	glutPostRedisplay();
 }
 
@@ -81,9 +91,9 @@ bool paper::contains(int xx, int yy)
 
 void paper::start_burning(vector<pair<int,int> > & burn_points)
 {
-	for (auto itr = burn_points.begin() ; itr != burn_points.end() ; itr++) {
-		int i = itr->first;
-		int j = itr->second;
+	for (pair<int,int> p : burn_points) {
+		int i = p.first;
+		int j = p.second;
 		cells[i][j].set_burning(0);
 	}
 }

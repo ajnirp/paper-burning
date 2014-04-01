@@ -93,13 +93,14 @@ void mouse(int button, int state, int x, int y)
 				pair<int,int> temp(x - p.get_x(), window_width - y - p.get_y());
 				burn_points.push_back(temp);
 			}
-			else {
-				cout << "Clicked outside paper" << endl;
-			}
+			else cout << "Clicked outside paper" << endl;
 		}
 		else {
-			pair<int,int> temp(x - p.get_x(), window_width - y - p.get_y());
-			p.start_burning(temp, sim_time);
+			if (p.contains(x, window_width - y)) {
+				pair<int,int> temp(x - p.get_x(), window_width - y - p.get_y());
+				p.start_burning(temp, sim_time);
+			}
+			else cout << "Clicked outside paper" << endl;
 		}
 	}
 }
@@ -113,6 +114,8 @@ void timer(int value)
 
 int main(int argc, char* argv[])
 {
+	srand(time(NULL));
+
 	glutInit(&argc, argv);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_RGBA | GLUT_DOUBLE);
