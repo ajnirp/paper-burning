@@ -5,13 +5,27 @@
 
 #include <vector>
 
-void cell::draw(int x_off, int y_off)
+cell::cell()
+{
+	b_state = UNBURNT;
+	burn_duration = 10;
+	char_threshold = 10;
+}
+
+void cell::draw(int x_off, int y_off, int t)
 {
 	/* Set color */
-	if (b_state == UNBURNT)
+	if (b_state == UNBURNT) {
 		glColor3ub(0xf5,0xef,0xce);
-	else if (b_state == BURNT)
-		glColor3ub(0,0,0);
+	}
+	else if (b_state == BURNT) {
+		int time_past_burn = t - burn_start - burn_duration;
+		float charring_amount = (float)time_past_burn / (float)char_threshold;
+		if (charring_amount >= 1)
+			glColor3ub(0,0,0);
+		else
+			glColor3ub((1-charring_amount)*0xf8,(1-charring_amount)*0x52,(1-charring_amount)*0x11);
+	}
 	else if (b_state == BURNING) {
 		glColor3ub(0xff,0,0);
 	}

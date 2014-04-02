@@ -1,12 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <unistd.h>
 
 #include <GL/gl.h>
 #include <GL/freeglut.h>
 
 #include "cell.hpp"
 #include "paper.hpp"
+
+#define FRAMES_PER_SECOND 30
 
 using namespace std;
 
@@ -32,7 +35,7 @@ void display()
 {
 	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT);
-	p.draw();
+	p.draw(sim_time);
 
 	glutSwapBuffers();
 }
@@ -109,7 +112,8 @@ void timer(int value)
 {
 	sim_time = value;
 	p.update(value);
-	glutTimerFunc(1000/30.f, timer, value+1);
+	glutPostRedisplay();
+	glutTimerFunc(1000.f/FRAMES_PER_SECOND, timer, value+1);
 }
 
 int main(int argc, char* argv[])

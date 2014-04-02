@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <unistd.h>
 
 #include <GL/gl.h>
 #include <GL/freeglut.h>
@@ -36,11 +35,11 @@ paper::~paper()
 	delete [] cells;
 }
 
-void paper::draw()
+void paper::draw(int t)
 {
 	for (int i = 0 ; i < s ; i++) {
 		for (int j = 0; j < s; j++) {
-			cells[i][j].draw(x, y);
+			cells[i][j].draw(x, y, t);
 		}
 	}
 }
@@ -81,7 +80,6 @@ void paper::update(int t)
 	}
 	/* set the cells in 'accumulated' to burning */
 	for (cell* c : accumulated) c->set_burning(t);
-	glutPostRedisplay();
 }
 
 bool paper::contains(int xx, int yy)
