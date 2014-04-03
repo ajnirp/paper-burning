@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "color.hpp"
+
 using namespace std;
 
 enum burn_state
@@ -20,6 +22,9 @@ private:
 	int burn_start;
 	int burn_duration;
 	int char_threshold;
+
+	color char_color;
+	color burn_color;
 
 public:
 	cell();
