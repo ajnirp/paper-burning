@@ -8,3 +8,8 @@ model temperature of a cell --SOMEWHAT DONE
 		how to model temperature falloff? --LINEAR (can improve on this?)
 
 improve gradual charring
+
+precompute spread probabilities via a normalized grayscale texture
+
+main aim - decouple simulation from rendering
+	possibly separate programs

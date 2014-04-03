@@ -47,6 +47,7 @@ void paper::draw(int t)
 void paper::accumulate_unburnt(int i, int j, vector<cell*> & accumulated)
 {
 	double threshold = 0.3; // 0.3 gives a nice simulation
+	// double threshold = 1;
 	if ((i+1 < s) and (cells[i+1][j].state() == UNBURNT)) {
 		if (random2() <= threshold)
 			accumulated.push_back(&cells[i+1][j]);
