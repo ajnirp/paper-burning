@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-inline double random2() { return (double) rand() / RAND_MAX; }
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+inline float random2() { return (float) rand() / RAND_MAX; }
+
+void write_texture(string filename, int s);
 
 #endif

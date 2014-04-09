@@ -2,20 +2,22 @@
 #define PAPER_HPP
 
 #include "cell.hpp"
+#include "texture.hpp"
 #include <vector>
+#include <string>
 
 class paper
 {
 private:
 	int x, y; // bottom left
 	int s; // side length
-	int burn_speed;
 	cell** cells;
+	texture texmap;
 
-	void accumulate_unburnt(int i, int j, vector<cell*> & accumulated);
+	void accumulate_unburnt(int i, int j, vector<cell*> & accumulated, bool use_texmap=false);
 
 public:
-	paper(int xx, int yy, int bspd, int ss=300);
+	paper(int xx, int yy, string texfile, int ss=300);
 	~paper();
 
 	inline int get_x() { return x; }

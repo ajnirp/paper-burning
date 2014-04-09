@@ -13,3 +13,7 @@ precompute spread probabilities via a normalized grayscale texture
 
 main aim - decouple simulation from rendering
 	possibly separate programs
+
+plan
+	make it 3D
+	then model deformations

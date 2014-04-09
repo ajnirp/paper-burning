@@ -2,8 +2,10 @@
 
 #include <GL/gl.h>
 #include <GL/freeglut.h>
-
 #include <vector>
+#include <iostream>
+
+using namespace std;
 
 cell::cell()
 {

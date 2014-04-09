@@ -8,6 +8,7 @@
 
 #include "cell.hpp"
 #include "paper.hpp"
+#include "misc.hpp"
 
 #define FRAMES_PER_SECOND 30
 
@@ -18,7 +19,8 @@ int window_id;
 int window_height = 400;
 int window_width = 400;
 bool burning = false;
-paper p(50,50,1,300);
+int paper_side = 300;
+paper p(50,50,"spreadvel.tex", paper_side);
 vector<pair<int,int> > burn_points;
 int sim_time = 0;
 
@@ -135,6 +137,8 @@ int main(int argc, char* argv[])
 	glutMouseFunc(mouse);
 
 	glutMainLoop();
+
+	// write_texture("spreadvel.tex", paper_side);
 
 	cout << "Exited cleanly" << endl;
 	return 0;
