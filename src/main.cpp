@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
 
 	glutMainLoop();
 
-	// write_texture("spreadvel.tex", paper_side);
+	write_texture("spreadvel.tex", paper_side);
 
 	cout << "Exited cleanly" << endl;
 	return 0;

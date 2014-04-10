@@ -47,7 +47,8 @@ void paper::draw(int t)
 
 void paper::accumulate_unburnt(int i, int j, vector<cell*> & accumulated, bool use_texmap)
 {
-	float threshold = 0.3; // 0.3 gives a nice simulation
+	/* 0.3 gives a nice simulation */
+	float threshold = 0.3;
 	// float threshold = 0.65;
 
 	float up_probability;

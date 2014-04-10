@@ -14,7 +14,12 @@ void write_texture(string filename, int s)
 			for (int dir = 0 ; dir < 4 ; dir++) {
 				// round spread velocity to 2 decimal places
 				float spread_velocity = (float)((int)(random2()*100)) / 100.f;
-				if (spread_velocity < 0.01) spread_velocity = 0.00;
+				if (spread_velocity > 0.8) spread_velocity = 0.8;
+
+				// boost probability, then clamp
+				// spread_velocity -= 0.1;
+				// if (spread_velocity <= 0) spread_velocity = 0.02;
+
 				fd << spread_velocity << " ";
 			}
 		}
