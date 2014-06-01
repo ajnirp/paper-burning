@@ -104,21 +104,21 @@ void paper::start_burning(pair<int,int> burn_point, int t)
 	cells[i][j].set_burning(t);
 }
 
-void paper::print_burning()
-{
-	int count1 = 0;
-	int count2 = 0;
-	int count3 = 0;
-	for (int i = 0 ; i < s ; i++)
-		for (int j = 0 ; j < s ; j++) {
-			if (cells[i][j].state() == UNBURNT)
-				count1++;
-			if (cells[i][j].state() == BURNING)
-				count2++;
-			if (cells[i][j].state() == BURNT)
-				count3++;
-		}
-	cout << count1 << " ";
-	cout << count2 << " ";
-	cout << count3 << endl;
-}
+// void paper::print_burning()
+// {
+// 	int count1 = 0;
+// 	int count2 = 0;
+// 	int count3 = 0;
+// 	for (int i = 0 ; i < s ; i++)
+// 		for (int j = 0 ; j < s ; j++) {
+// 			if (cells[i][j].state() == UNBURNT)
+// 				count1++;
+// 			if (cells[i][j].state() == BURNING)
+// 				count2++;
+// 			if (cells[i][j].state() == BURNT)
+// 				count3++;
+// 		}
+// 	cout << count1 << " ";
+// 	cout << count2 << " ";
+// 	cout << count3 << endl;
+// }

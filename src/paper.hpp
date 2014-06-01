@@ -27,7 +27,7 @@ public:
 	void start_burning(vector<pair<int,int> > & burn_points);
 	void start_burning(pair<int,int> burn_point, int t);
 
-	void print_burning();
+	// void print_burning();
 };
 
 

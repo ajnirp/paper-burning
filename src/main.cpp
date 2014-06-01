@@ -76,11 +76,11 @@ void keyboard(unsigned char key, int x, int y)
 			}
 			break;
 
-		case 'f':
-			if (burning) {
-				p.print_burning();
-			}
-			break;
+		// case 'f':
+		// 	if (burning) {
+		// 		p.print_burning();
+		// 	}
+		// 	break;
 	}
 }
 
